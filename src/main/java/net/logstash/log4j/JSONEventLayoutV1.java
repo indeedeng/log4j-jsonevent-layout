@@ -3,6 +3,7 @@ package net.logstash.log4j;
 import com.fasterxml.jackson.core.JsonGenerator.Feature;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import net.logstash.log4j.data.HostData;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.time.FastDateFormat;
@@ -18,7 +19,8 @@ import java.util.TimeZone;
 
 public class JSONEventLayoutV1 extends Layout {
     private static final ObjectMapper JSON = new ObjectMapper()
-            .configure(Feature.ESCAPE_NON_ASCII, true);
+            .configure(Feature.ESCAPE_NON_ASCII, true)
+            .configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
 
     private boolean locationInfo = false;
     private String customUserFields;

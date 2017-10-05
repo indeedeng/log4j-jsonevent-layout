@@ -272,13 +272,20 @@ public class JSONEventLayoutV1Test {
 
         MDC.put("int", 1);
         MDC.put("string", "one");
+        MDC.put("notSerializable", new NotSerializable());
         logger.warn("warning dawg");
         String message = appender.getMessages()[0];
         Object obj = JSONValue.parse(message);
         JSONObject jsonObject = (JSONObject) obj;
+        final JSONObject mdc = (JSONObject)jsonObject.get("mdc");
 
-        Assert.assertEquals("atFields contains mdc integer", 1, ((JSONObject)jsonObject.get("mdc")).get("int"));
-        Assert.assertEquals("atFields contains mdc string", "one", ((JSONObject)jsonObject.get("mdc")).get("string"));
+        Assert.assertEquals("atFields contains mdc integer", 1, mdc.get("int"));
+        Assert.assertEquals("atFields contains mdc string", "one", mdc.get("string"));
+        Assert.assertEquals(
+            "Does not contain field which is not serializable",
+            0,
+            ((JSONObject)mdc.get("notSerializable")).size()
+        );
 
         // revert MDC
         MDC.clear();
