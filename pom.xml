@@ -33,7 +33,7 @@
   <parent>
     <groupId>com.indeed</groupId>
     <artifactId>oss-parent</artifactId>
-    <version>5</version>
+    <version>19</version>
   </parent>
   <scm>
     <connection>scm:git:https://github.com/indeedeng/log4j-jsonevent-layout.git</connection>
